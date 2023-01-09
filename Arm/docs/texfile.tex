@@ -1,0 +1,240 @@
+\def\mytitle{BCD to GRAY Conversion}
+\def\myauthor{Valmeekam Navya}
+\def\contact{}
+\def\mymodule{Future Wireless Communication (FWC)}
+\documentclass[10pt, a4paper]{article}
+\usepackage[a4paper,outer=1.5cm,inner=1.5cm,top=1.75cm,bottom=1.5cm]{geometry}
+\twocolumn
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+\usepackage[colorlinks,linkcolor={black},citecolor={blue!80!black},urlcolor={blue!80!black}]{hyperref}
+\usepackage[parfill]{parskip}
+\usepackage{lmodern}
+\usepackage{tikz}
+%\documentclass[tikz, border=2mm]{standalone}
+\usepackage{karnaugh-map}
+%\documentclass{article}
+\usepackage{tabularx}
+\usepackage{circuitikz}
+\usetikzlibrary{calc}
+\usepackage{enumitem}
+\usepackage{kvmap}
+\renewcommand*\familydefault{\sfdefault}
+\usepackage{watermark}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{titlesec}
+
+\titlespacing{\subsection}{1pt}{\parskip}{3pt}
+\titlespacing{\subsubsection}{0pt}{\parskip}{-\parskip}
+\titlespacing{\paragraph}{0pt}{\parskip}{\parskip}
+\newcommand{\figuremacro}[5]{
+   % \begin{figure}[#1]
+      %  \centering
+       % \includegraphics[width=#5\columnwidth]{#2}
+        %\caption[#3]{\textbf{#3}#4}
+        %\label{fig:#2}
+    %\end{figure}
+}
+
+\lstset{
+frame=single, 
+breaklines=true,
+columns=fullflexible
+}
+
+%\thiswatermark{\centering \put(181,-119.0){\includegraphics[scale=0.13]{iith_logo3}} }
+\title{\mytitle}
+\author{\myauthor\hspace{1em}\\\contact\\FWC22039}
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\begin{abstract}
+	    This manual explains BCD to GRAY code conversion by finding boolean equations. \\
+	   \end{abstract}
+	  \section{BCD to GRAY Conversion}
+The BCD to GRAY code converter takes the numbers 0, 1, . . . , 9 in binary as inputs and generates the converted number as output. Make connections as shown in table 1.
+Gray code – also known as Cyclic Code, Reflected Binary Code (RBC), Reflected Binary (RB) or Grey code.
+
+\textbf{Problem : -}
+Implement BCD to GRAY conversion
+
+   \section{Implementation}
+ \textbf{Connections :-}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Arduino} & 2 & 3 & 4 & 5 & 6 & 7 & 8  \\
+\hline
+\textbf{Display} & {a} & {b} & {c} & {d} & {e} & {f} & {g} \\
+\hline
+\end{tabular}
+
+\section{Karnaugh Map}
+Using Boolean logic or kmaps, G0, G1, G2, G3 in the truth table can be expressed in terms of the inputs A,B,C,D 
+\newline
+\centering
+\begin{kvmap}
+\begin{kvmatrix}{C,D,A,B}
+0&1&0&1 \\
+0&1&0&1 \\
+0&0&0&0 \\
+0&1&0&0 \\
+\end{kvmatrix}
+\bundle[color=red]{1}{0}{1}{1}
+\bundle[color=red]{3}{0}{3}{1}
+\bundle[color=red]{1}{3}{1}{3}
+\end{kvmap}
+\newline
+Kmap for G0
+\begin{equation}
+G0=A'C'D+A'CD'+AB'C'D 
+\end{equation}
+\begin{center}
+\begin{kvmap}
+\begin{kvmatrix}{C,D,A,B}
+0&0&1&1 \\
+1&1&0&0 \\
+0&0&0&0 \\
+0&0&0&0 \\
+\end{kvmatrix}
+\bundle[color=red]{2}{0}{3}{0}
+\bundle[color=red]{0}{1}{1}{1}
+\end{kvmap}\\
+kmap for G1
+\begin{equation}
+G1=A'BC'+A'B'C 
+\end{equation}
+\end{center}
+\begin{center}
+\begin{kvmap}
+\begin{kvmatrix}{C,D,A,B}
+0&0&0&0 \\
+1&1&1&1 \\
+0&0&0&0 \\
+1&1&0&0 \\
+\end{kvmatrix}
+\bundle[color=red]{0}{1}{1}{1}
+\bundle[color=red]{0}{3}{1}{3}
+\end{kvmap}
+\end{center}
+kmap for G2
+\begin{equation}
+G2=A'B+AB'C'   
+\end{equation} \
+\begin{center}
+\begin{kvmap}
+\begin{kvmatrix}{c,D,A,B}
+0&0&0&0 \\
+0&0&0&0 \\
+0&0&0&0 \\
+1&1&0&0 \\
+\end{kvmatrix}
+\bundle[color=red]{0}{3}{1}{3}
+\end{kvmap}
+\end{center}
+Kmap for G3
+\begin{equation}
+G3=AB'C' 
+\end{equation}
+\newpage
+Using Boolean logic or kmaps, a,b,c,d,e,f,g in the truth table can be expressed in terms of G0,G1,G2,G3  as:
+\newline
+\begin{equation}
+a=G0'G1'G2G3'+G0G1'G2'G3'
+\end{equation}
+\begin{equation}
+b=G0'G1'G2G3+G0'G1G2G3'+
+G0G1'G2G3'
+\end{equation}
+\begin{equation}
+c=G0'G1G2'G3'+G0'G1'G2G3
+\end{equation}
+\begin{equation}
+d=G0'G1'G2G3'+G0G1G2G3'
++G0G1'G2'G3'
+\end{equation}
+\newline
+
+\begin{kvmap}
+\begin{kvmatrix}{G2,G3,G0,G1}
+0&0&0&1 \\
+0&0&0&0 \\
+1&0&0&1 \\
+1&0&0&1 \\
+\end{kvmatrix}
+\bundle[color=red,invert=true,reducespace=2pt,overlapmargins=6pt]{0}{2}{3}{3}
+\bundle[color=cyan,invert=true,reducespace=2pt,overlapmargins=6pt]{3}{0}{3}{3}
+\end{kvmap}\\
+Kmap for e
+\begin{equation}
+    e=G0G3'+G0G2G3'
+\end{equation}
+\begin{kvmap}
+\begin{kvmatrix}{G2,G3,G0,G1}
+0&0&0&0 \\
+1&0&0&0 \\
+1&0&0&1 \\
+1&0&0&0 \\
+\end{kvmatrix}
+\bundle[color=cyan,invert=true,reducespace=2pt,overlapmargins=6pt]{0}{2}{3}{2}
+\bundle[color=red]{0}{1}{0}{2}
+\bundle[color=black]{0}{2}{0}{3}
+\end{kvmap}
+\newline
+Kmap for f
+\begin{equation}
+f=G0G2'G3'+G1G2'G3'+G0G1G3'
+\end{equation}
+\begin{kvmap}
+\begin{kvmatrix}{G2,G3,G0,G1}
+1&0&0&0 \\
+0&0&0&0 \\
+0&0&0&1 \\
+1&0&0&0 \\
+\end{kvmatrix}
+\bundle[color=cyan,invert=true,reducespace=2pt,overlapmargins=6pt]{0}{0}{0}{3}
+\bundle[color=red]{3}{2}{3}{2}
+\end{kvmap}
+\newline
+Kmap for g
+\begin{equation}
+g=G1'G2'G3'+G1'G2G3+G0G1G2G3'
+\end{equation}
+
+The code below realizes BCD to GRAY conversion using vaman board 
+\\
+\begin{center}
+\fbox{\parbox{8.5cm}{\url{https://github.com/NavyaValmeekam/FWC/tree/main/Arm/code}}}
+\end{center}
+\section{Setup}
+\begin{enumerate}
+\item Connect the Vaman to the Laptop through USB.
+\item There is a button and an LED to the left of the USB port on the Vaman.There is another button to the right of the LED.
+\item Press the right button first and immediately press the left button.The LED will be blinking green.The Vaman is now in bootloader mode.
+\end{enumerate}
+\subsection{The steps for implementation:}
+\begin{enumerate}
+\item Login to termux-ubuntu on the android device and execute the following commands:\\
+Make sure that the required installation of pygmy-sdk had done prior executing below commands
+\begin{lstlisting}
+proot-distro login debian
+cd  /data/data/com.termux/files/home/
+mkdir arm
+svn co https://github.com/NavyaValmeekam/FWC/tree/main/Arm/code
+\end{lstlisting}
+\begin{lstlisting}
+cd code/GCC_Project
+make
+scp /data/data/com.termux/files/home/arm/code/GCC_Project/output/bin/codes.bin usernameofpc@IPaddress:/home/username
+\end{lstlisting}
+Make sure that the appropriate username,IP address of the Laptop is given in the above command.
+\item Now execute the following commands on the Laptop terminal\\
+Make sure that required installation of programmer application and modification of bash file had done prior executing below command
+\begin{lstlisting}
+bash flash.sh codes.bin
+\end{lstlisting}
+\item After finishing the process of flashing with the programmer application press the button to the right of the USB port to reset. Vaman is now flashed with our source code
+\end{enumerate}
+\end{document}
