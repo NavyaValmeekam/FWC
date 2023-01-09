@@ -5,8 +5,8 @@
 
 //    Can be client or even host   //
 #ifndef STASSID
-#define STASSID "SRKS" // Add your network credentials
-#define STAPSK  "sankara1"
+#define STASSID "Galaxy A30s42EC" // Add your network credentials
+#define STAPSK  "navya123"
 #endif
 
 const char* ssid = STASSID;
