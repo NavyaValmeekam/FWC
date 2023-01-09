@@ -1,5 +1,0 @@
-\contentsline {section}{\numberline {1}BCD to GRAY Conversion}{1}{section.1}%
-\contentsline {section}{\numberline {2}Implementation}{1}{section.2}%
-\contentsline {section}{\numberline {3}Karnaugh Map}{1}{section.3}%
-\contentsline {section}{\numberline {4}Setup}{2}{section.4}%
-\contentsline {subsection}{\numberline {4.1}The steps for implementation:}{2}{subsection.4.1}%
